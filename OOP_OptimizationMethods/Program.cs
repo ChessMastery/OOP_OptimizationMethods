@@ -20,10 +20,10 @@
             var str = Console.ReadLine().Split();
             points.Add((double.Parse(str[0]), double.Parse(str[1])));
          }
-         var functinal = new FunctionalsImplementation.MyFunctional() { points = points };
+         var functional = new FunctionalsImplementation.MyFunctional() { points = points };
          var fun = new FunctionsImplementation.LineFunction();
 
-         var res = optimizer.Minimize(functinal, fun, initial);
+         var res = optimizer.Minimize(functional, fun, initial);
          Console.WriteLine($"a={res[0]},b={res[1]}");
       }
    }

@@ -30,7 +30,7 @@ namespace FunctionsImplementation
             }
 
         }
-      public IDifferentiableFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients=parameters };
+      public IFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients=parameters };
    }
     class Polynomial : IParametricFunction
     {
@@ -97,7 +97,7 @@ namespace FunctionsImplementation
                 return result;
             }
         }
-        public IDifferentiableFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
+        public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
     }
 
 }
