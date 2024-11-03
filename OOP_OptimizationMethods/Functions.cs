@@ -104,18 +104,10 @@ namespace FunctionsImplementation
 
          public IVector Gradient(IVector point)
          {
+            // need to be implemented
             throw new NotImplementedException();
          }
       }
       public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
-   }
-
-   class SplineInterpolativeQuadratic : IFunction
-   {
-      public double Value(IVector point)
-      {
-         // need to be implemented
-         throw new NotImplementedException();
-      }
    }
 }
