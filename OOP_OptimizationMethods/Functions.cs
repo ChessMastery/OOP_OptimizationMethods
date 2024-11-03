@@ -7,97 +7,115 @@ namespace FunctionsImplementation
     public class Vector : List<double>, IVector
     {
     }
-    class LineFunction : IParametricFunction
+   class LineFunction : IParametricFunction
    {
       class InternalLineFunction : IFunction, IDifferentiableFunction
       {
-            public IVector coefficients;
+         public IVector coefficients;
          public double Value(IVector point)
+         {
+            double sum = 0;
+            for (int i = 0; i < point.Count; i++)
             {
-                double sum = 0;
-                for (int i=0;i<point.Count;i++)
-                {
-                    sum += point[i]*coefficients[i+1];
-                }
-                sum += coefficients[0];
-                return sum;
+               sum += point[i] * coefficients[i + 1];
             }
-            public IVector Gradient(IVector point)
-            {
-                IVector result = coefficients;
-                result.RemoveAt(0);
-                return result;
-            }
-
-        }
-      public IFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients=parameters };
+            sum += coefficients[0];
+            return sum;
+         }
+         public IVector GradientOnVariables(IVector point)
+         {
+            IVector result = coefficients;
+            result.RemoveAt(0);
+            return result;
+         }
+         public IVector Gradient(IVector point)
+         {
+            IVector result = point;
+            return result;
+         }
+      }
+      public IFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients = parameters };
    }
-    class Polynomial : IParametricFunction
-    {
-        class InternalPolynomialFunction : IFunction
-        {
-            public IVector coefficients;
 
-            public double Value(IVector point)
+   class Polynomial : IParametricFunction
+   {
+      class InternalPolynomialFunction : IFunction
+      {
+         public IVector coefficients;
+
+         public double Value(IVector point)
+         {
+            double sum = 0;
+            for (int i = 0; i < coefficients.Count; i++)
             {
-                double sum = 0;
-                for (int i=0;i<coefficients.Count; i++)
-                {
-                    sum += Math.Pow(point[0], i) * coefficients[i];
-                }
-                return sum;
+               sum += Math.Pow(point[0], i) * coefficients[i];
             }
+            return sum;
+         }
 
-        }
-        public IFunction Bind(IVector parameters) => new InternalPolynomialFunction() { coefficients = parameters };
-    }
+      }
+      public IFunction Bind(IVector parameters) => new InternalPolynomialFunction() { coefficients = parameters };
+   }
 
-    class PiecewiseLinear: IParametricFunction 
-    {
-        class InternalPiecewiseLinear: IFunction,IDifferentiableFunction
-        {
-            public IVector coefficients;
-            
-            public double Value(IVector point)
+   class PiecewiseLinear : IParametricFunction
+   {
+      class InternalPiecewiseLinear : IFunction, IDifferentiableFunction
+      {
+         public IVector coefficients;
+
+         public double Value(IVector point)
+         {
+            int breakpointsnum = (coefficients.Count() - 2) / 3;
+            int index = -1;
+            for (int i = 0; i < breakpointsnum; i++)
             {
-                int breakpointsnum = (coefficients.Count() - 2) / 3;
-                int index=-1;
-                for (int i=0;i< breakpointsnum; i++) 
-                {
-                    if (coefficients[i] > point[0])
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index==-1)
-                {
-                    index = breakpointsnum;
-                }
-                return coefficients[breakpointsnum+index*2] * point[0] + coefficients[breakpointsnum + index * 2+1];
+               if (coefficients[i] > point[0])
+               {
+                  index = i;
+                  break;
+               }
             }
-            public IVector Gradient(IVector point)
+            if (index == -1)
             {
-                int breakpointsnum = (coefficients.Count() - 2) / 3;
-                int index = -1;
-                for (int i = 0; i < breakpointsnum; i++)
-                {
-                    if (coefficients[i] > point[0])
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index == -1)
-                {
-                    index = breakpointsnum;
-                }
-                var result = new Vector();
-                result.Add(coefficients[breakpointsnum +index*2]);
-                return result;
+               index = breakpointsnum;
             }
-        }
-        public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
-    }
+            return coefficients[breakpointsnum + index * 2] * point[0] + coefficients[breakpointsnum + index * 2 + 1];
+         }
+         public IVector GradientOnVariables(IVector point)
+         {
+            int breakpointsnum = (coefficients.Count() - 2) / 3;
+            int index = -1;
+            for (int i = 0; i < breakpointsnum; i++)
+            {
+               if (coefficients[i] > point[0])
+               {
+                  index = i;
+                  break;
+               }
+            }
+            if (index == -1)
+            {
+               index = breakpointsnum;
+            }
+            var result = new Vector();
+            result.Add(coefficients[breakpointsnum + index * 2]);
+            return result;
+         }
 
+         public IVector Gradient(IVector point)
+         {
+            throw new NotImplementedException();
+         }
+      }
+      public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
+   }
+
+   class SplineInterpolativeQuadratic : IFunction
+   {
+      public double Value(IVector point)
+      {
+         // need to be implemented
+         throw new NotImplementedException();
+      }
+   }
 }
