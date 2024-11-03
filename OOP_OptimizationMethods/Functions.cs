@@ -9,7 +9,7 @@ namespace FunctionsImplementation
     }
    class LineFunction : IParametricFunction
    {
-      class InternalLineFunction : IFunction, IDifferentiableFunction
+      class InternalLineFunction : IFunction, IDifferentiableFunction, IParametricFunction
       {
          public IVector coefficients;
          public double Value(IVector point)
@@ -30,9 +30,14 @@ namespace FunctionsImplementation
          }
          public IVector Gradient(IVector point)
          {
-            IVector result = point;
+            var result = new Vector();
+            result.Add(1.0);
+            for (int i = 0; i < point.Count; i++)
+               result.Add(point[i]);
             return result;
          }
+
+         public IFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients = parameters };
       }
       public IFunction Bind(IVector parameters) => new InternalLineFunction() { coefficients = parameters };
    }
