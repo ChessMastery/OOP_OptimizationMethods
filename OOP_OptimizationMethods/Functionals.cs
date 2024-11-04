@@ -104,7 +104,7 @@ namespace FunctionalsImplementation
         {
             // NOTE: Добавил проверку на то, реализует ли function IDifferentiableFunction
 
-            if (function is IDifferentiableFunction)
+            if (!(function is IDifferentiableFunction))
             {
                 throw new NotImplementedException("Function is not differentiable via parameters.");
             }
