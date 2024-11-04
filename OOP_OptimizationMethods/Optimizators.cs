@@ -119,7 +119,7 @@ namespace OptimizatorsImplementation
          if (!(objective is IDifferentiableFunctional))
             throw new NotImplementedException("MinimizerGradientDescent.Minimize parameter objective does not implement IDifferentiableFunctional");
          
-         Console.WriteLine("MinimizerGradientDescent params in ieration " + 0.ToString() + " = ");
+         Console.WriteLine("MinimizerGradientDescent params in iteration " + 0.ToString() + " = ");
          for (int i = 0; i < initialParameters.Count(); i++)
             Console.WriteLine(initialParameters[i].ToString());
          Console.WriteLine("Functional = " + ((IDifferentiableFunctional)objective).Value((IFunction)function.Bind(initialParameters)).ToString());
@@ -131,7 +131,7 @@ namespace OptimizatorsImplementation
             for (int i = 0; i < initialParameters.Count; i++)
                initialParameters[i] -= delta2[i] * 0.01;
 
-            Console.WriteLine("MinimizerGradientDescent params in ieration " + it.ToString() + " = ");
+            Console.WriteLine("MinimizerGradientDescent params in iteration " + (it + 1).ToString() + " = ");
             for (int i = 0; i < initialParameters.Count(); i++)
                Console.WriteLine(initialParameters[i].ToString());
             Console.WriteLine("Functional = " + ((IDifferentiableFunctional)objective).Value((IFunction)function.Bind(initialParameters)).ToString());
@@ -154,7 +154,7 @@ namespace OptimizatorsImplementation
          if (!(function.Bind(initialParameters) is IDifferentiableFunction))
             throw new NotImplementedException("MinimizerGaussNewton.Minimize parameter function does not implement IDifferentiableFunction");
 
-         Console.WriteLine("GaussNewton params in ieration " + 0.ToString() + " = ");
+         Console.WriteLine("GaussNewton params in iteration " + 0.ToString() + " = ");
          for (int i = 0; i < initialParameters.Count(); i++)
             Console.WriteLine(initialParameters[i].ToString());
          Console.WriteLine("Functional = " + ((ILeastSquaresFunctional)objective).Value((IFunction)function.Bind(initialParameters)).ToString());
@@ -173,7 +173,7 @@ namespace OptimizatorsImplementation
             for (int i = 0; i < initialParameters.Count; i++)
                initialParameters[i] += delta[i];
 
-            Console.WriteLine("GaussNewton params in ieration " + it.ToString() + " = ");
+            Console.WriteLine("GaussNewton params in iteration " + (it + 1).ToString() + " = ");
             for (int i = 0; i < initialParameters.Count(); i++)
                Console.WriteLine(initialParameters[i].ToString());
             Console.WriteLine("Functional = " + ((ILeastSquaresFunctional)objective).Value((IFunction)function.Bind(initialParameters)).ToString());
