@@ -1,6 +1,7 @@
 ﻿using CommonInterfaces;
 using Functions;
 using System.Numerics;
+using System.Reflection;
 
 namespace FunctionsImplementation
 {
@@ -109,8 +110,10 @@ namespace FunctionsImplementation
 
          public IVector Gradient(IVector point)
          {
-            // need to be implemented
-            throw new NotImplementedException();
+                var result= new Vector();
+                result.Add(point[0]);
+                result.Add(1);
+                return(result);
          }
       }
       public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
