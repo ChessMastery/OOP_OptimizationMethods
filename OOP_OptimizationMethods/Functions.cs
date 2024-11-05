@@ -62,9 +62,9 @@ namespace FunctionsImplementation
       public IFunction Bind(IVector parameters) => new InternalPolynomialFunction() { coefficients = parameters };
    }
 
-   class PiecewiseLinear : IParametricFunction
+   class PiecewiseLinear1D : IParametricFunction
    {
-      class InternalPiecewiseLinear : IFunction, IDifferentiableFunction
+      class InternalPiecewiseLinear1D : IFunction, IDifferentiableFunction
       {
          public IVector coefficients;
 
@@ -109,10 +109,9 @@ namespace FunctionsImplementation
 
          public IVector Gradient(IVector point)
          {
-            // need to be implemented
-            throw new NotImplementedException();
+            throw new NotImplementedException("PiecewiseLinear1D.Gradient is not defined in joint points, thus not implemented.");
          }
       }
-      public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear() { coefficients = parameters };
+      public IFunction Bind(IVector parameters) => new InternalPiecewiseLinear1D() { coefficients = parameters };
    }
 }
